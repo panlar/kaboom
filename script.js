@@ -17,7 +17,8 @@ const d = document,
   $level_indicator = d.getElementById("level-indicator"),
   $game = d.getElementById("game"),
   $grid = d.getElementById("grid"),
-  $info = d.getElementById("info");
+  $info = d.getElementById("info"),
+  $explosion = d.getElementById("explosion");
 
 const levels = {
     easy: {
@@ -262,6 +263,7 @@ function kaboom() {
     )}px, ${getRandomInt(-120, 121)}px)`;
   });
   $grid.classList.add("kaboom");
+  $explosion.play();
 }
 
 function desKaboom() {
@@ -308,6 +310,7 @@ d.addEventListener("click", (e) => {
 
   if (e.target.matches(".level")) {
     setLevel(e.target);
+    desKaboom();
     loadGame();
   }
 
