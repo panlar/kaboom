@@ -106,7 +106,6 @@ function loadGame() {
   lessLifeButton();
   setBlocks(spaces, bombs);
   setBombs(spaces, bombs);
-  desKaboom();
 }
 
 function getRandomInt(min, max) {
@@ -128,20 +127,20 @@ function setBlocks(arr, limit) {
   for (let i = 0; i < 36; i++) {
     let block = d.createElement("div");
     block.classList.add("block");
+    block.style.transitionDelay = `${0.05 * i}s`;
+    block.style.transform = "scale(.5)";
     $grid.appendChild(block);
-
-    if (i === 35) {
-      d.querySelectorAll(".block").forEach((el, index) => {
-        el.style.transitionDelay = 0.05 * index + "s";
-        setTimeout(() => {
-          el.style.transform = "scale(1)";
-          el.style.opacity = 1;
-          el.style.transitionDuration = "0s";
-          el.style.transitionDelay = "0s";
-        }, 50 * index);
-      });
-    }
   }
+
+  d.querySelectorAll(".block").forEach((el, i, a) => {
+    setTimeout(() => {
+      el.style.opacity = 1;
+      el.style.transform = "scale(1)";
+      setTimeout(() => {
+        el.style.transitionDelay = "0s";
+      }, 500);
+    }, 0.1 * i);
+  });
 }
 
 function setBombs(arr, limit) {
@@ -282,6 +281,7 @@ $levels_selector.onclick = () => {
 $restart.addEventListener("click", (e) => {
   $restart.classList.add("active");
   $levels_selector.classList.remove("active");
+  desKaboom();
   loadGame();
   setTimeout(() => {
     $restart.classList.remove("active");
@@ -320,10 +320,10 @@ d.addEventListener("click", (e) => {
   }
 });
 
-// d.oncontextmenu = () => false;
+d.oncontextmenu = () => false;
 
-d.addEventListener("keydown", e => {
+d.addEventListener("keydown", (e) => {
   if (e.keyCode === 123) {
     e.preventDefault();
   }
-})
+});

@@ -44,7 +44,7 @@ ion-icon {
 /* --- HEADER --- */
 
 .header {
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 0 1rem;
   flex-wrap: wrap;
   font-size: 0.85rem;
@@ -77,11 +77,18 @@ ion-icon {
 /* --- LOGO --- */
 
 .logo {
-  font-size: 1.8rem;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 3rem;
   font-style: italic;
+  color: #fff;
+  background-color: var(--color);
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
 }
 .logo img {
-  width: 2rem;
+  width: 3rem;
 }
 
 /* --- LIVES --- */
@@ -313,7 +320,6 @@ ion-icon {
   opacity: 0;
   z-index: 1;
   transition-duration: .5s;
-  transform: scale(.6);
 }
 
 .bomb {
@@ -362,12 +368,10 @@ ion-icon {
   transform: rotate(45deg);
 }
 
+.levels-selector.active > .levels,
 .shop-lifes.active .shoping-lifes {
   display: block;
-}
-
-.levels-selector.active > .levels {
-  display: block;
+  z-index: 2;
 }
 
 .level.selected {
@@ -415,10 +419,6 @@ ion-icon {
 
 .header .marker:nth-child(5) {
   animation-delay: 0.625s;
-}
-
-.header .marker:nth-child(6) {
-  animation-delay: 0.75s;
 }
 
 
