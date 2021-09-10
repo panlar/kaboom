@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="Kaboom!">
-    <meta property="og:description" content="Disfruta de un divertido juego inspirado en el viejo y famoso buscaminas">
-    <meta property="og:url" content="https://panlar.github.io/kaboom">
-    <meta property="og:author" content="Paul Barahona">
-    <meta property="og:type" content="object">
+    <meta property="og:title" content="Kaboom!" />
+    <meta
+      property="og:description"
+      content="Disfruta de un divertido juego inspirado en el viejo y famoso buscaminas"
+    />
+    <meta property="og:url" content="https://panlar.github.io/kaboom" />
+    <meta property="og:author" content="Paul Barahona" />
+    <meta property="og:type" content="object" />
     <title>KABOOM!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,15 +19,25 @@
       href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles-min.css" />
-    <link rel="shortcut icon" href="bomb-solid.svg" type="image/x-icon">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link class="favicon" rel="shortcut icon" type="image/x-icon">
   </head>
   <body>
-    <audio id="explosion" src="./explosion.mp3"></audio>
+    <div class="loaded" id="loaded">
+      <div>BIENVENID@ A KABOOM!!!</div>
+      <div>Encuentra la mayor cantidad de areas sin bombas</div>
+      <div>¡DIVERTETE! 🥳😄</div>
+      <div class="load-game" id="load-game">¡JUEGA YA!</div>
+    </div>
     <div class="logo container">
       Kaboom!
-      <img src="./bomb-solid-white.svg" alt="bomb">
+      <img src="./bomb-solid-white.svg" alt="bomb" />
     </div>
 
     <header class="header container">
@@ -40,7 +53,9 @@
           <div id="hard" class="level">Díficil</div>
         </div>
       </div>
-      <div class="marker money"><ion-icon name="logo-bitcoin"></ion-icon><span id="money"></span></div>
+      <div class="marker money">
+        <ion-icon name="logo-bitcoin"></ion-icon><span id="money"></span>
+      </div>
       <div class="marker record">Record : <span id="record"></span></div>
     </header>
 
@@ -54,11 +69,23 @@
             <ion-icon title="Comprar Vidas" name="add-outline"></ion-icon>
             <div class="shoping-lifes">
               <div class="shoping-lifes-quantity">
-                <div id="less-life" class="quantity-controlers"><ion-icon name="remove-outline"></ion-icon></div>
+                <div id="less-life" class="quantity-controlers">
+                  <ion-icon name="remove-outline"></ion-icon>
+                </div>
                 <div id="quantity" class="quantity">1</div>
-                <div id="more-life" class="quantity-controlers" data-action="more-life"><ion-icon name="add-outline" data-action="more-life"></ion-icon></div>
+                <div
+                  id="more-life"
+                  class="quantity-controlers"
+                >
+                  <ion-icon
+                    name="add-outline"
+                  ></ion-icon>
+                </div>
               </div>
-              <div class="price"><ion-icon name="logo-bitcoin"></ion-icon> <span id="price">15</span></div>
+              <div class="price">
+                <ion-icon name="logo-bitcoin"></ion-icon>
+                <span id="price">15</span>
+              </div>
               <div class="buy" id="buy">COMPRAR</div>
             </div>
           </div>
@@ -82,7 +109,6 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
-    <script src="script-min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
-

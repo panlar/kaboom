@@ -1,5 +1,7 @@
 const d = document,
   ls = localStorage,
+  $loaded = d.getElementById("loaded"),
+  $load_game = d.getElementById("load-game"),
   $levels_selector = d.getElementById("levels-selector"),
   $remaining_blocks = d.getElementById("remaining-blocks"),
   $marker = d.getElementById("marker"),
@@ -18,7 +20,15 @@ const d = document,
   $game = d.getElementById("game"),
   $grid = d.getElementById("grid"),
   $info = d.getElementById("info"),
-  $explosion = d.getElementById("explosion");
+  $click_sound = new Audio("./click.mp3"),
+  $life_sound = new Audio("./life.mp3"),
+  $pop_sound = new Audio("./pop.mp3"),
+  $bomb_sound = new Audio("./bomb.mp3"),
+  $error_sound = new Audio("./error.mp3"),
+  $load_game_sound = new Audio("./load-game.mp3"),
+  $game_over_sound = new Audio("./game-over.mp3");
+
+$load_game_sound.volume = 0.5;
 
 const levels = {
     easy: {
@@ -65,7 +75,12 @@ let level = ls.getItem("level"),
   marker = 0,
   color = d.documentElement.style.setProperty("--color", colors[level]);
 
+setFavicon(level);
+
 function loadGame() {
+  $load_game_sound.play();
+  setFavicon(level);
+
   d.querySelectorAll(".header .marker").forEach((el) => {
     el.style.opacity = 0;
     el.style.animationName = "popup";
@@ -109,6 +124,12 @@ function loadGame() {
   setBombs(spaces, bombs);
 }
 
+function setFavicon(level) {
+  d.head
+    .querySelector(".favicon")
+    .setAttribute("href", `bomb-solid-${level}.svg`);
+}
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -122,13 +143,13 @@ function setLevel(target) {
   color = d.documentElement.style.setProperty("--color", colors[level]);
 }
 
-function setBlocks(arr, limit) {
+function setBlocks() {
   $grid.innerHTML = "";
 
   for (let i = 0; i < 36; i++) {
     let block = d.createElement("div");
     block.classList.add("block");
-    block.style.transitionDelay = `${0.05 * i}s`;
+    block.style.transitionDelay = `${0.12 * i}s`;
     block.style.transform = "scale(.5)";
     $grid.appendChild(block);
   }
@@ -156,6 +177,11 @@ function setBombs(arr, limit) {
 
 function identifyBlock(target) {
   if (target.dataset.bomb) {
+    $bomb_sound.play();
+    setTimeout(() => {
+      $bomb_sound.pause();
+      $bomb_sound.currentTime = 0;
+    }, 500);
     target.classList.replace("block", "bomb");
     target.innerHTML = `<i class="bomb-img fas fa-bomb"></i>`;
     lifes--;
@@ -177,6 +203,7 @@ function identifyBlock(target) {
       `;
     }
   } else {
+    $pop_sound.play();
     target.classList.replace("block", "clean");
 
     marker += levels[level].points;
@@ -225,6 +252,11 @@ function lessLifeButton() {
 
 function buyLifes() {
   if (price > money) {
+    $error_sound.play();
+    setTimeout(() => {
+      $error_sound.pause();
+      $error_sound.currentTime = 0;
+    }, 300);
     $info.innerHTML = `
     <div class="insuffucient-money">
     Lo sentimos, aún no tienes dinero suficiente para comprar ${quantity} vidas
@@ -239,12 +271,13 @@ function buyLifes() {
       $info.innerHTML = `
       <div>
       <h3>¡Felicidades! 🥳</h3>
-      <br><br>
+      <br>
       Ahora puedes seguir jugando 🤩
       </div>
       `;
       desKaboom();
     }
+    $life_sound.play();
     lifes += quantity;
     money = money - price;
     ls.setItem("lifes", lifes);
@@ -263,7 +296,7 @@ function kaboom() {
     )}px, ${getRandomInt(-120, 121)}px)`;
   });
   $grid.classList.add("kaboom");
-  $explosion.play();
+  $game_over_sound.play();
 }
 
 function desKaboom() {
@@ -273,11 +306,15 @@ function desKaboom() {
   $grid.classList.remove("kaboom");
 }
 
-d.addEventListener("DOMContentLoaded", loadGame);
+$load_game.onclick = () => {
+  loadGame();
+  $loaded.classList.add("hidden");
+};
 
 $levels_selector.onclick = () => {
   $levels_selector.classList.toggle("active");
   $shop_lifes.classList.remove("active");
+  $click_sound.play();
 };
 
 $restart.addEventListener("click", (e) => {
@@ -285,6 +322,7 @@ $restart.addEventListener("click", (e) => {
   $levels_selector.classList.remove("active");
   desKaboom();
   loadGame();
+  $click_sound.play();
   setTimeout(() => {
     $restart.classList.remove("active");
   }, 500);
@@ -294,14 +332,17 @@ d.addEventListener("click", (e) => {
   if (e.target === $shop_lifes || e.target.matches(".shop-lifes > ion-icon")) {
     $shop_lifes.classList.toggle("active");
     $levels_selector.classList.remove("active");
+    $click_sound.play();
   }
 
   if (e.target === $more_life || e.target.matches("#more-life ion-icon")) {
     selectLifes("more");
+    $click_sound.play();
   }
 
   if (e.target === $less_life || e.target.matches("#less-life ion-icon")) {
     selectLifes();
+    $click_sound.play();
   }
 
   if (e.target === $buy) {
@@ -312,6 +353,7 @@ d.addEventListener("click", (e) => {
     setLevel(e.target);
     desKaboom();
     loadGame();
+    $click_sound.play();
   }
 
   if (

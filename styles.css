@@ -64,10 +64,9 @@ ion-icon {
 }
 
 .header .marker {
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
-
 
 .marker > span {
   color: #ddd;
@@ -84,8 +83,8 @@ ion-icon {
   font-style: italic;
   color: #fff;
   background-color: var(--color);
-  border-bottom-left-radius: .25rem;
-  border-bottom-right-radius: .25rem;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
 }
 .logo img {
   width: 3rem;
@@ -257,8 +256,8 @@ ion-icon {
   padding: 1rem;
   display: flex;
   color: #fff;
-  background: linear-gradient(var(--color) 90%, #ced6e0 10%) ;
-  border-radius: .25rem;
+  background: linear-gradient(var(--color) 90%, #ced6e0 10%);
+  border-radius: 0.25rem;
 }
 
 .markers .marker {
@@ -304,10 +303,8 @@ ion-icon {
   font-size: 4rem;
   font-style: italic;
   color: var(--color);
-  text-shadow: 2px 2px 0 #fff,
-  -2px 2px 0 #fff,
-  -2px -2px 0 #fff,
-  2px -2px 0 #fff;
+  text-shadow: 2px 2px 0 #fff, -2px 2px 0 #fff, -2px -2px 0 #fff,
+    2px -2px 0 #fff;
 }
 
 .grid.kaboom::before {
@@ -319,7 +316,7 @@ ion-icon {
   border-radius: 0.25rem;
   opacity: 0;
   z-index: 1;
-  transition-duration: .5s;
+  transition-duration: 0.5s;
 }
 
 .bomb {
@@ -421,6 +418,56 @@ ion-icon {
   animation-delay: 0.625s;
 }
 
+.loaded {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color);
+  color: #fff;
+  font-size: 3rem;
+  transition: 1s;
+}
+
+.loaded div {
+  animation-name: scale;
+  opacity: 0;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.loaded div:nth-child(2) {
+  animation-name: slideUp;
+  margin: 2rem 0;
+  font-size: 2rem;
+  animation-delay: .75s;
+}
+
+.loaded div:nth-child(3) {
+  animation-name: slideUp;
+  animation-delay: 1.5s;
+}
+
+.load-game {
+  margin-top: 3rem;
+  padding: 1rem 4rem;
+  color: var(--color);
+  background-color: #fff;
+  border-radius: .25rem;
+  animation-delay: 2.25s;
+  cursor: pointer;
+}
+
+.loaded.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
 
 @keyframes popup {
   0% {
@@ -435,10 +482,22 @@ ion-icon {
 
 @keyframes slideUp {
   from {
-    transform: translateY(150px) scale(.8);
+    transform: translateY(150px) scale(0.8);
     opacity: 0;
-  } to {
+  }
+  to {
     transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
     opacity: 1;
   }
 }
